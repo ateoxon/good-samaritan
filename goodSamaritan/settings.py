@@ -22,7 +22,7 @@ SECRET_KEY = 'no!dkk8$$nltw9etxn$fg+8v)&n=hf9_8@y41%(7)=vv21xe!^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['']
 
 
 # Application definition

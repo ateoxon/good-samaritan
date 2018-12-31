@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
-from phonenumber_field.modelfields import PhoneNumberField
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE) #on delete: when user is deleted, delete profile / when profile is deleted, do not delete user
@@ -24,12 +23,6 @@ class Profile(models.Model):
         default="ZIP / Postal code",
         max_length=12,
     )
-
-
-
-
-
-
 
     def __str__(self):
         return f'{self.user.username} Profile'
