@@ -1,0 +1,81 @@
+{% extends "blog/base.html" %}
+
+{% block body %}
+
+<center>  <div class="add_buttons">
+
+
+    <div class="btn-group-vertical">
+      <a href="{% url 'display_foods' %}" class="btn btn-outline-info" role="button"> View Food</a>
+      <a href="{% url 'add_food' %}" class="btn btn-outline-info" role="button"> Add Food</a>
+    </div>
+
+    <div class="btn-group-vertical">
+      <a href="{% url 'display_drinks' %}" class="btn btn-outline-info" role="button">View Drinks</a>
+      <a href="{% url 'add_drink' %}" class="btn btn-outline-info" role="button"> Add Drink</a>
+    </div>
+
+    <div class="btn-group-vertical">
+      <a href="{% url 'display_miscObjects' %}" class="btn btn-outline-info" role="button"> View Misc</a>
+      <a href="{% url 'add_miscObject' %}" class="btn btn-outline-info" role="button"> Add Misc</a>
+    </div>
+
+
+  </div>
+
+  </center>
+
+  <div>
+
+    <h4>Currently Viewing {{ header }}</h4>
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>Description</th>
+        <th>Expiry Date</th>
+        <th>Status</th>
+        <th>Misc</th>
+        <th>Vendor</th>
+
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for item in items %}
+
+      <tr>
+        <td>{{ item.pk }}
+        <td>{{ item.description }}</td>
+        <td>{{ item.expiry }} </td>
+        <td>{{ item.status }}</td>
+        <td>{{ item.misc }}</td>
+        <td>{{ item.donator }}</td>
+
+        {% if header|lower == "drinks" %}
+        <td>
+            <a href="{% url 'edit_drink' item.pk %}" class="btn btn-outline-info" role="button" aria-pressed="true" > Edit</a>
+            <a href="{% url 'delete_drink' item.pk%}" class="btn btn-danger btn-sm" role="button" aria-pressed="true" > x </a>
+        </td>
+        {% elif header|lower == "foods" %}
+        <td>
+            <a href="{% url 'edit_food' item.pk %}" class="btn btn-outline-info" role="button" aria-pressed="true" > Edit</a>
+            <a href="{% url 'delete_food' item.pk%}" class="btn btn-danger btn-sm" role="button" aria-pressed="true" > x </a>
+        </td>
+        {% else %}
+        <td>
+            <a href="{% url 'edit_miscObject' item.pk %}" class="btn btn-outline-info" role="button" aria-pressed="true" > Edit</a>
+            <a href="{% url 'delete_miscObject' item.pk%}" class="btn btn-danger btn-sm" role="button" aria-pressed="true" > x </a>
+        </td>
+        {% endif %}
+      </tr>
+
+      {% endfor %}
+
+    </tbody>
+  </table>
+
+{% endblock %}
