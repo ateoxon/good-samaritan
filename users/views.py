@@ -18,7 +18,7 @@ def register(request):
 
 
 @login_required
-def profile(request):
+def profile(request): # still need to update with VendorProfile and ConsumerProfile
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST,

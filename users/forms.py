@@ -11,11 +11,11 @@ from captcha.fields import CaptchaField
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
     captcha = CaptchaField()
+    vendor = forms.BooleanField()
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name','last_name', 'password1', 'password2', 'captcha']
-
+        fields = ['username', 'email', 'first_name','last_name', 'password1', 'password2', 'captcha', 'vendor']
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
@@ -24,8 +24,9 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ['username', 'first_name','last_name', 'email']
 
+###############
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['image','phone_Number','address','city','zip_Code']
+        fields = ['image','phone_Number','address','city','zip_Code','hours','contact']
