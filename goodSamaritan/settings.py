@@ -19,6 +19,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'no!dkk8$$nltw9etxn$fg+8v)&n=hf9_8@y41%(7)=vv21xe!^'
 
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LeuD4YUAAAAAMqzb3hzceFP72y0OoxVLBCF42rL'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'inventory',
     'import_export',
+    'captcha',
 
 ]
 
