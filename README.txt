@@ -24,4 +24,4 @@ run:
 
   then finally, manage.py runserver
 
-  in your browser, navigate to localhost:8000 to find your dev server on your machine
+  in your browser, navigate to localhost:8000 to open page
