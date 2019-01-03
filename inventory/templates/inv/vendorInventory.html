@@ -8,17 +8,17 @@
 
 
     <div class="btn-group-vertical">
-      <a href="{% url 'display_foodsV' %}" class="btn btn-outline-info" role="button"> View Food</a>
+      <a href="{% url 'display_foods' %}" class="btn btn-outline-info" role="button"> View Food</a>
       <a href="{% url 'add_food' %}" class="btn btn-outline-info" role="button"> Add Food</a>
     </div>
 
     <div class="btn-group-vertical">
-      <a href="{% url 'display_drinksV' %}" class="btn btn-outline-info" role="button">View Drinks</a>
+      <a href="{% url 'display_drinks' %}" class="btn btn-outline-info" role="button">View Drinks</a>
       <a href="{% url 'add_drink' %}" class="btn btn-outline-info" role="button"> Add Drink</a>
     </div>
 
     <div class="btn-group-vertical">
-      <a href="{% url 'display_miscObjectsV' %}" class="btn btn-outline-info" role="button"> View Misc</a>
+      <a href="{% url 'display_miscObjects' %}" class="btn btn-outline-info" role="button"> View Misc</a>
       <a href="{% url 'add_miscObject' %}" class="btn btn-outline-info" role="button"> Add Misc</a>
     </div>
 
@@ -40,7 +40,7 @@
         <th>Expiry Date</th>
         <th>Status</th>
         <th>Misc</th>
-        <th>Vendor</th>
+        <th>Edit/Delete</th>
 
       </tr>
     </thead>
@@ -55,7 +55,6 @@
         <td>{{ item.expiry }} </td>
         <td>{{ item.status }}</td>
         <td>{{ item.misc }}</td>
-        <td>{{ item.donator }}</td>
 
         {% if header|lower == "drinks" %}
         <td>

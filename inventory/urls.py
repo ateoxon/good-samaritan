@@ -17,6 +17,10 @@ urlpatterns = [
     url(r'^foods/edit_item/(?P<pk>\d+)$', edit_food, name="edit_food"),
     url(r'^miscObjects/edit_item/(?P<pk>\d+)$', edit_miscObject, name="edit_miscObject"),
 
+    url(r'^drinks/reserve_item/(?P<pk>\d+)$', reserve_drink, name="reserve_drink"),
+    url(r'^foods/reserve_item/(?P<pk>\d+)$', reserve_food, name="reserve_food"),
+    url(r'^miscObjects/reserve_item/(?P<pk>\d+)$', reserve_miscObject, name="reserve_miscObject"),
+
     url(r'^drinks/delete/(?P<pk>\d+)$', delete_drink, name="delete_drink"),
     url(r'^foods/delete/(?P<pk>\d+)$', delete_food, name="delete_food"),
     url(r'^miscObjects/delete/(?P<pk>\d+)$', delete_miscObject, name="delete_miscObject")

@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-
-# Create your views here.
-
+from django.contrib.auth.models import User
+from users.models import *
 from .models import *
-
 from .forms import *
 
 
@@ -20,162 +18,266 @@ def consumerView(request):
 def unauthenticatedView(request):
     return render(request, 'inv/unauthenticatedInventory.html')
 ################ need to edit other views to render consumer/vendor/unauth
+
 def display_drinks(request):
     items = Drinks.objects.all()
     context = {
         'items': items,
         'header': 'Drinks',
     }
-    return render(request, 'inv/unauthenticatedInventory.html', context)
+
+    if not request.user.is_authenticated:
+        items = Drinks.objects.filter(status='AVAILABLE')
+        context = {
+            'items': items,
+            'header': 'Drinks',
+        }
+        return render(request, 'inv/unauthenticatedInventory.html', context)
+
+    elif request.user.profile.vendor:
+        items = Drinks.objects.filter(donator__username=request.user.username)
+        context = {
+            'items': items,
+            'header': 'Drinks',
+        }
+        return render(request, 'inv/vendorInventory.html', context)
+
+    elif not request.user.profile.vendor:
+        items = Drinks.objects.filter(status='AVAILABLE')
+        context = {
+            'items': items,
+            'header': 'Drinks',
+        }
+        return render(request, 'inv/consumerInventory.html', context)
+
 def display_foods(request):
     items = Foods.objects.all()
     context = {
         'items': items,
         'header': 'Foods',
     }
-    return render(request, 'inv/unauthenticatedInventory.html', context)
+    if not request.user.is_authenticated:
+        items = Foods.objects.filter(status='AVAILABLE')
+        context = {
+            'items': items,
+            'header': 'Foods',
+        }
+        return render(request, 'inv/unauthenticatedInventory.html', context)
+
+    elif request.user.profile.vendor:
+        items = Foods.objects.all()
+        context = {
+            'items': items,
+            'header': 'Foods',
+        }
+        return render(request, 'inv/vendorInventory.html', context)
+
+    elif not request.user.profile.vendor:
+        items = Foods.objects.filter(status='AVAILABLE')
+        context = {
+            'items': items,
+            'header': 'Foods',
+        }
+        return render(request, 'inv/consumerInventory.html', context)
+
 def display_miscObjects(request):
     items = MiscObjects.objects.all()
     context = {
         'items': items,
         'header': 'MiscObjects',
     }
-    return render(request, 'inv/unauthenticatedInventory.html', context)
-################
-def display_drinksC(request):
-    items = Drinks.objects.all()
-    context = {
-        'items': items,
-        'header': 'Drinks',
-    }
-    return render(request, 'inv/consumerInventory.html', context)
-def display_foodsC(request):
-    items = Foods.objects.all()
-    context = {
-        'items': items,
-        'header': 'Foods',
-    }
-    return render(request, 'inv/consumerInventory.html', context)
-def display_miscObjectsC(request):
-    items = MiscObjects.objects.all()
-    context = {
-        'items': items,
-        'header': 'MiscObjects',
-    }
-    return render(request, 'inv/consumerInventory.html', context)
-################
-def display_drinksV(request):
-    items = Drinks.objects.all()
-    context = {
-        'items': items,
-        'header': 'Drinks',
-    }
-    return render(request, 'inv/vendorInventory.html', context)
-def display_foodsV(request):
-    items = Foods.objects.all()
-    context = {
-        'items': items,
-        'header': 'Foods',
-    }
-    return render(request, 'inv/vendorInventory.html', context)
-def display_miscObjectsV(request):
-    items = MiscObjects.objects.all()
-    context = {
-        'items': items,
-        'header': 'MiscObjects',
-    }
-    return render(request, 'inv/vendorInventory.html', context)
-################
+    if not request.user.is_authenticated:
+        items = MiscObjects.objects.filter(status='AVAILABLE')
+        context = {
+            'items': items,
+            'header': 'MiscObjects',
+        }
+        return render(request, 'inv/unauthenticatedInventory.html', context)
 
+    elif request.user.profile.vendor:
+        items = MiscObjects.objects.all()
+        context = {
+            'items': items,
+            'header': 'MiscObjects',
+        }
+        return render(request, 'inv/vendorInventory.html', context)
+
+    elif not request.user.profile.vendor:
+        items = MiscObjects.objects.filter(status='AVAILABLE')
+        context = {
+            'items': items,
+            'header': 'MiscObjects',
+        }
+        return render(request, 'inv/consumerInventory.html', context)
+
+################################################################################
+
+@login_required
 def add_item(request, cls):
-    if request.method == "POST":
-        form = cls(request.POST)
-
-        if form.is_valid():
-            form.save()
-            return redirect('index')
-
+    if not request.user.profile.vendor:
+        return redirect('consumerIndex')
     else:
-        form = cls()
-        return render(request, 'inv/add_new.html', {'form' : form})
+        if request.method == "POST":
+            form = cls(request.POST)
 
+            if form.is_valid():
+                form.save()
+                return redirect('vendorIndex')
 
+        else:
+            form = cls()
+            return render(request, 'inv/add_new.html', {'form' : form})
+
+@login_required
 def add_drink(request):
-    return add_item(request, DrinkForm)
-
-
-def add_food(request):
-    return add_item(request, FoodForm)
-
-
-def add_miscObject(request):
-    return add_item(request, MiscObjectForm)
-
-
-def edit_item(request, pk, model, cls):
-    item = get_object_or_404(model, pk=pk)
-
-    if request.method == "POST":
-        form = cls(request.POST, instance=item)
-        if form.is_valid():
-            form.save()
-            return redirect('index')
+    if not request.user.profile.vendor:
+        return redirect('consumerIndex')
     else:
-        form = cls(instance=item)
+        return add_item(request, DrinkForm)
 
-        return render(request, 'inv/edit_item.html', {'form': form})
+@login_required
+def add_food(request):
+    if not request.user.profile.vendor:
+        return redirect('consumerIndex')
+    else:
+        return add_item(request, FoodForm)
+
+@login_required
+def add_miscObject(request):
+    if not request.user.profile.vendor:
+        return redirect('consumerIndex')
+    else:
+        return add_item(request, MiscObjectForm)
+
+################################################################################
+
+@login_required
+def edit_item(request, pk, model, cls):
+    if not request.user.profile.vendor:
+        return redirect('consumerIndex')
+    else:
+        item = get_object_or_404(model, pk=pk)
+
+        if request.method == "POST":
+            form = cls(request.POST, instance=item)
+            if form.is_valid():
+                form.save()
+                return redirect('vendorIndex')
+        else:
+            form = cls(instance=item)
+
+            return render(request, 'inv/edit_item.html', {'form': form})
 
 
-
+@login_required
 def edit_drink(request, pk):
-    return edit_item(request, pk, Drinks, DrinkForm)
+    if not request.user.profile.vendor:
+        return redirect('consumerIndex')
+    else:
+        return edit_item(request, pk, Drinks, DrinkForm)
 
-
+@login_required
 def edit_food(request, pk):
-    return edit_item(request, pk, Foods, FoodForm)
+    if not request.user.profile.vendor:
+        return redirect('consumerIndex')
+    else:
+        return edit_item(request, pk, Foods, FoodForm)
 
-
+@login_required
 def edit_miscObject(request, pk):
-    return edit_item(request, pk, MiscObjects, MiscObjectForm)
+    if not request.user.profile.vendor:
+        return redirect('consumerIndex')
+    else:
+        return edit_item(request, pk, MiscObjects, MiscObjectForm)
 
 
+################################################################################
+
+@login_required
+def reserve_item(request, pk, model, cls):
+    if request.user.profile.vendor:
+        return redirect('vendorIndex')
+    else:
+        item = get_object_or_404(model, pk=pk)
+
+        if request.method == "POST":
+            form = cls(request.POST, instance=item)
+            if form.is_valid():
+                form.save()
+                return redirect('vendorIndex')
+        else:
+            form = cls(instance=item)
+
+            return render(request, 'inv/reserve_item.html', {'form': form})
+
+
+@login_required
+def reserve_drink(request, pk):
+    if request.user.profile.vendor:
+        return redirect('vendorIndex')
+    else:
+        return reserve_item(request, pk, Drinks, ReserveDrinkForm)
+
+@login_required
+def reserve_food(request, pk):
+    if request.user.profile.vendor:
+        return redirect('vendorIndex')
+    else:
+        return reserve_item(request, pk, Foods, ReserveFoodForm)
+
+@login_required
+def reserve_miscObject(request, pk):
+    if request.user.profile.vendor:
+        return redirect('vendorIndex')
+    else:
+        return reserve_item(request, pk, MiscObjects, ReserveMiscObjectForm)
+
+################################################################################
+
+@login_required
 def delete_drink(request, pk):
+    if not request.user.profile.vendor:
+        return redirect('consumerIndex')
+    else:
+        template = 'inv/vendorInventory.html'
+        Drinks.objects.filter(id=pk).delete()
 
-    template = 'inv/index.html'
-    Drinks.objects.filter(id=pk).delete()
+        items = Drinks.objects.all()
 
-    items = Drinks.objects.all()
+        context = {
+            'items': items,
+        }
 
-    context = {
-        'items': items,
-    }
+        return render(request, template, context)
 
-    return render(request, template, context)
-
-
+@login_required
 def delete_food(request, pk):
+    if not request.user.profile.vendor:
+        return redirect('consumerIndex')
+    else:
+        template = 'inv/vendorInventory.html'
+        Foods.objects.filter(id=pk).delete()
 
-    template = 'inv/index.html'
-    Foods.objects.filter(id=pk).delete()
+        items = Foods.objects.all()
 
-    items = Foods.objects.all()
+        context = {
+            'items': items,
+        }
 
-    context = {
-        'items': items,
-    }
+        return render(request, template, context)
 
-    return render(request, template, context)
-
-
+@login_required
 def delete_miscObject(request, pk):
+    if not request.user.profile.vendor:
+        return redirect('consumerIndex')
+    else:
+        template = 'inv/vendorInventory.html'
+        MiscObjects.objects.filter(id=pk).delete()
 
-    template = 'inv/index.html'
-    MiscObjects.objects.filter(id=pk).delete()
+        items = MiscObjects.objects.all()
 
-    items = MiscObjects.objects.all()
+        context = {
+            'items': items,
+        }
 
-    context = {
-        'items': items,
-    }
-
-    return render(request, template, context)
+        return render(request, template, context)

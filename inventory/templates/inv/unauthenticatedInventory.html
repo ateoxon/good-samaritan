@@ -2,10 +2,8 @@
 
 {% block body %}
 
-
-
-<center>  <div class="add_buttons">
-
+<center>
+  <div class="add_buttons">
 
     <div class="btn-group-vertical">
       <a href="{% url 'display_foods' %}" class="btn btn-outline-info" role="button"> View Food</a>
@@ -18,7 +16,6 @@
     <div class="btn-group-vertical">
       <a href="{% url 'display_miscObjects' %}" class="btn btn-outline-info" role="button"> View Misc</a>
     </div>
-
 
   </div>
 
@@ -37,7 +34,6 @@
         <th>Expiry Date</th>
         <th>Status</th>
         <th>Misc</th>
-        <th>Vendor</th>
 
       </tr>
     </thead>
@@ -52,7 +48,6 @@
         <td>{{ item.expiry }} </td>
         <td>{{ item.status }}</td>
         <td>{{ item.misc }}</td>
-        <td>{{ item.donator }}</td>
 
 
       </tr>

@@ -6,7 +6,7 @@
   <form method="POST">
     {% csrf_token %}
 
-    <h3><u>Editing Item</u></h3>
+    <h3><u>Are you sure you'd like to reserve this item?</u></h3>
     {% for field in form %}
     <div class="form-group row">
       <label for="id_{{ field.name }}" class="col-2 col-form-label">{{ field.label }}</label>
@@ -22,7 +22,7 @@
 
     <div class="form-group row">
       <div class="offset-sm-2 col-sm-6">
-        <button type="submit" class="btn btn-primary">Edit item</button>
+        <button type="submit" class="btn btn-primary">Reserve item</button>
 
       </div>
 
