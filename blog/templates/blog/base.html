@@ -24,15 +24,28 @@
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'index' %}">Good Samaritans</a>
+          <a class="navbar-brand mr-4" href="{% url 'blog-about' %}">Good Samaritans</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{% url 'index' %}">Home</a>
               <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
               <a class="nav-item nav-link" href="{% url 'blog-home' %}">Blog</a>
+
+              {% if user.is_authenticated %}
+
+                {% if user.profile.vendor %} <!-- checks if vendor is true, should change nav bar to separate inventory -->
+                <a class="nav-item nav-link" href="{% url 'vendorIndex' %}">View/Edit Inventory</a> <!-- vendor link -->
+                {% elif not user.profile.vendor %}
+                <a class="nav-item nav-link" href="{% url 'consumerIndex' %}">View Inventory</a> <!-- consumer link -->
+                {% endif %}
+              {% elif not user.is_authenticated %}
+              <a class="nav-item nav-link" href="{% url 'unauthenticatedIndex' %}">View Inventory</a> <!-- unauth link -->
+
+              {% endif %}
+
+
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">

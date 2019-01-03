@@ -28,8 +28,9 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name = 'logout'),
     path('profile/', user_views.profile, name = 'profile'),
     path('blog/', include('blog.urls')), #can edit here, can change blog to blog_dev and can create a develepment screen
-    path('', include('inventory.urls')),
+    path('inventory/', include('inventory.urls')),
     path('captcha/', include('captcha.urls')),
+    path('', user_views.landing, name='landing')
 ]
 
 

@@ -4,18 +4,13 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
 from captcha.fields import CaptchaField
 
-#from .models import VendorProfile
-#from .models import ConsumerProfile
-
-
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
     captcha = CaptchaField()
-    vendor = forms.BooleanField()
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name','last_name', 'password1', 'password2', 'captcha', 'vendor']
+        fields = ['username', 'email', 'first_name','last_name', 'password1', 'password2', 'captcha']
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
@@ -29,4 +24,4 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['image','phone_Number','address','city','zip_Code','hours','contact']
+        fields = ['image','phone_Number','address','city','zip_Code','hours','contact', 'vendor']

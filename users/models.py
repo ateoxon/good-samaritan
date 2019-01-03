@@ -1,34 +1,47 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
+from django import forms
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE) #on delete: when user is deleted, delete profile / when profile is deleted, do not delete user
-    image = models.ImageField(default='default.jpg',upload_to='profile_pics')
-    is_vendor = models.BooleanField('Vendor?', default=False)
+
+    image = models.ImageField(
+        default='default.jpg',
+        upload_to='profile_pics'
+    )
+    vendor = models.BooleanField(default=False)
+
     phone_Number = models.CharField(blank=True, max_length=124)
+
     address = models.CharField(
-        default="Address line 1",
+        blank=True,
         max_length=1024,
     )
     city = models.CharField(
-        default="City",
+        blank=True,
         max_length=1024,
     )
 
     zip_Code = models.CharField(
-        default="ZIP / Postal code",
+        blank=True,
         max_length=12,
     )
 
     hours = models.CharField(
-        default="Hours",
+        blank=True,
+        help_text="Hours of Operation",
         max_length=100,
     )
 
     contact = models.CharField(
-        default="Point of Contact",
+        blank=True,
+        help_text="Point of Contact",
         max_length=100,
+    )
+
+    verified = models.BooleanField(
+        default=False
     )
 
     def __str__(self):

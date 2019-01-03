@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -7,34 +8,84 @@ from .models import *
 from .forms import *
 
 
-def index(request):
-    return render(request, 'inv/index.html')
 
+@login_required
+def vendorView(request):
+    return render(request, 'inv/vendorInventory.html')
+
+@login_required
+def consumerView(request):
+    return render(request, 'inv/consumerInventory.html')
+
+def unauthenticatedView(request):
+    return render(request, 'inv/unauthenticatedInventory.html')
+################ need to edit other views to render consumer/vendor/unauth
 def display_drinks(request):
     items = Drinks.objects.all()
     context = {
         'items': items,
         'header': 'Drinks',
     }
-    return render(request, 'inv/index.html', context)
-
-
+    return render(request, 'inv/unauthenticatedInventory.html', context)
 def display_foods(request):
     items = Foods.objects.all()
     context = {
         'items': items,
         'header': 'Foods',
     }
-    return render(request, 'inv/index.html', context)
-
-
+    return render(request, 'inv/unauthenticatedInventory.html', context)
 def display_miscObjects(request):
     items = MiscObjects.objects.all()
     context = {
         'items': items,
         'header': 'MiscObjects',
     }
-    return render(request, 'inv/index.html', context)
+    return render(request, 'inv/unauthenticatedInventory.html', context)
+################
+def display_drinksC(request):
+    items = Drinks.objects.all()
+    context = {
+        'items': items,
+        'header': 'Drinks',
+    }
+    return render(request, 'inv/consumerInventory.html', context)
+def display_foodsC(request):
+    items = Foods.objects.all()
+    context = {
+        'items': items,
+        'header': 'Foods',
+    }
+    return render(request, 'inv/consumerInventory.html', context)
+def display_miscObjectsC(request):
+    items = MiscObjects.objects.all()
+    context = {
+        'items': items,
+        'header': 'MiscObjects',
+    }
+    return render(request, 'inv/consumerInventory.html', context)
+################
+def display_drinksV(request):
+    items = Drinks.objects.all()
+    context = {
+        'items': items,
+        'header': 'Drinks',
+    }
+    return render(request, 'inv/vendorInventory.html', context)
+def display_foodsV(request):
+    items = Foods.objects.all()
+    context = {
+        'items': items,
+        'header': 'Foods',
+    }
+    return render(request, 'inv/vendorInventory.html', context)
+def display_miscObjectsV(request):
+    items = MiscObjects.objects.all()
+    context = {
+        'items': items,
+        'header': 'MiscObjects',
+    }
+    return render(request, 'inv/vendorInventory.html', context)
+################
 
 def add_item(request, cls):
     if request.method == "POST":

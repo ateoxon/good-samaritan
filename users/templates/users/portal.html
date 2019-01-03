@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,15 +20,12 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
     <!-- Custom CSS -->
-    <link href="cust/portalCss.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href=" {% static 'portal/portalCss.css' %} ">
 
     <!-- Bootstrap core JavaScript -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-
-    <!-- Custom scripts for this template -->
-    <script src="cust/portalJs.js"></script>
 
   </head>
 
@@ -34,6 +33,7 @@
 
     <!-- splash header -->
     <header class="masthead d-flex">
+
       <div class="container text-center my-auto">
         <h1 class="mb-1">Good Samaritan</h1>
         <h3 class="mb-5">
@@ -44,26 +44,44 @@
     </header>
 
     <!-- input area -->
-    <section class="content-section bg-light" id="about">
+    <section class="content-section bg-dark text-light" id="about">
 
+      <div id="welcomePage">
 
+        <center><h5>An application where local non-profits and restaurants meet.</h5></center>
+        <br>
+        <center><h5>With Good Samaritan, businesses and food pantries can easily coordinate donation management and pick-up times.</h5></center>
+        <br>
+        <center><h5>As a local business or restaurant, you can upload items onto our inventory management system so others can view what's available. Post your business name, phone number, and hours of operation so food pantries will be able to reach out! </h5></center>
+        <br>
+        <center><h5>As a non-profit organization, you can log in to the application, and view what local businesses have available for pickup! On a first-come, first-serve basis, you can reserve items for your pantry and contact the business for a good time to swing by!</h5></center>
 
-    <div class="signup-links">
+      </div>
+
+      <br>
+      <br>
+      <br>
+      <br>
+
+    <div class="signup-link">
       <div class="row">
 
         <div class="col">
-          <center><h4>Donator? Register here.</h4></center>
+          <center><h3>Want to join? <a class="nav-item nav-link" href="{% url 'register' %}">Register here.</a></h3></center>
         </div>
 
         <div class="col">
-          <center><h4>Food Pantry? Register here.</h4></center>
+          <center> <h3>Want more info? <a class="nav-item nav-link" href="{% url 'blog-about' %}">Enter the site!</a></h3> </center>
         </div>
 
-  </div>
-<br>
-<br>
-<br>
-<center> <h5>New? Want more info? <a class="nav-item nav-link" href="{% url 'blog-about' %}">Read more about us here.</a></h5> </center>
+        <div class="col">
+          <center> <h3>Members<a class="nav-item nav-link" href="{% url 'login' %}">Sign in!</a></h3> </center>
+        </div>
+
+      </div>
+    </div>
+
+
 
 
 

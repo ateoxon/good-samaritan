@@ -4,6 +4,9 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 
 
+def landing(request):
+    return render(request, 'users/portal.html')
+
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -38,5 +41,4 @@ def profile(request): # still need to update with VendorProfile and ConsumerProf
         'u_form': u_form,
         'p_form': p_form
     }
-
     return render(request, 'users/profile.html', context)

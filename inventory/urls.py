@@ -2,7 +2,9 @@ from django.conf.urls import url
 from .views import *
 
 urlpatterns = [
-    url(r'^$', index, name='index'),
+    url(r'^unauthenticatedView$', unauthenticatedView, name='unauthenticatedIndex'),
+    url(r'^consumerView$', consumerView, name='consumerIndex'),
+    url(r'^vendorView$', vendorView, name='vendorIndex'),
     url(r'^drinks$', display_drinks, name="display_drinks"),
     url(r'^foods$', display_foods, name="display_foods"),
     url(r'^miscObjects$', display_miscObjects, name="display_miscObjects"),
