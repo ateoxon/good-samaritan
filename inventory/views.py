@@ -25,7 +25,7 @@ def display_drinks(request):
         'items': items,
         'header': 'Drinks',
     }
-    ###test
+
     if not request.user.is_authenticated:
         items = Drinks.objects.filter(status='AVAILABLE')
         context = {
@@ -34,13 +34,31 @@ def display_drinks(request):
         }
         return render(request, 'inv/unauthenticatedInventory.html', context)
 
-    elif request.user.profile.vendor:
+    #elif request.user.profile.vendor:
+    #    items = Drinks.objects.filter(donator__username=request.user.username)
+    #    context = {
+    #        'items': items,
+    #        'header': 'Drinks',
+    #    }
+    #    return render(request, 'inv/vendorInventory.html', context)
+
+    elif request.user.profile.vendor: #attempt with stackvoerflow comment
         items = Drinks.objects.filter(donator__username=request.user.username)
         context = {
             'items': items,
             'header': 'Drinks',
         }
+        if request.GET:
+            form = DrinkForm()
+        if request.POST:
+            form = DrinkForm(request.POST)
+            if form.is_valid():
+                drinks = form.save(commit=False)
+                drinks.donator = request.user.username
+                drinks.save()
         return render(request, 'inv/vendorInventory.html', context)
+
+
 
     elif not request.user.profile.vendor:
         items = Drinks.objects.filter(status='AVAILABLE')
