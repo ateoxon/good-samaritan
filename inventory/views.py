@@ -25,7 +25,7 @@ def display_drinks(request):
         'items': items,
         'header': 'Drinks',
     }
-
+    ###test
     if not request.user.is_authenticated:
         items = Drinks.objects.filter(status='AVAILABLE')
         context = {
