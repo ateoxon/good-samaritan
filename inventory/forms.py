@@ -7,7 +7,6 @@ class DrinkForm(forms.ModelForm):
         model = Drinks
         fields = ('description', 'expiry', 'status', 'misc', 'donator')
 
-
 class FoodForm(forms.ModelForm):
     class Meta:
         model = Foods
