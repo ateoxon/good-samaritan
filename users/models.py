@@ -23,6 +23,12 @@ class Profile(models.Model):
         max_length=1024,
     )
 
+    state = models.CharField(
+        blank = True,
+        max_length=1024,
+
+    )
+
     zip_Code = models.CharField(
         blank=True,
         max_length=12,

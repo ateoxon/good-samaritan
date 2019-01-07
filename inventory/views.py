@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+#from django.views.generic import ListView
 from users.models import *
 from .models import *
 from .forms import *
@@ -17,6 +18,20 @@ def consumerView(request):
 
 def unauthenticatedView(request):
     return render(request, 'inv/unauthenticatedInventory.html')
+
+"""
+class UserDonationListView(ListView):
+    model = Donation
+    template_name = 'inv/user_donations.html'
+    context_object_name = 'items'
+    paginate_by = 5
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return Donation.objects.filter(donator=user)
+        #.order_by('-date_posted')
+"""
+
 ################ need to edit other views to render consumer/vendor/unauth
 
 def display_drinks(request):
@@ -25,7 +40,6 @@ def display_drinks(request):
         'items': items,
         'header': 'Drinks',
     }
-
     if not request.user.is_authenticated:
         items = Drinks.objects.filter(status='AVAILABLE')
         context = {
@@ -33,14 +47,6 @@ def display_drinks(request):
             'header': 'Drinks',
         }
         return render(request, 'inv/unauthenticatedInventory.html', context)
-
-    #elif request.user.profile.vendor:
-    #    items = Drinks.objects.filter(donator__username=request.user.username)
-    #    context = {
-    #        'items': items,
-    #        'header': 'Drinks',
-    #    }
-    #    return render(request, 'inv/vendorInventory.html', context)
 
     elif request.user.profile.vendor: #attempt with stackvoerflow comment
         items = Drinks.objects.filter(donator__username=request.user.username)
@@ -58,8 +64,6 @@ def display_drinks(request):
                 drinks.save()
         return render(request, 'inv/vendorInventory.html', context)
 
-
-
     elif not request.user.profile.vendor:
         items = Drinks.objects.filter(status='AVAILABLE')
         context = {
@@ -67,6 +71,7 @@ def display_drinks(request):
             'header': 'Drinks',
         }
         return render(request, 'inv/consumerInventory.html', context)
+
 
 def display_foods(request):
     items = Foods.objects.all()
@@ -82,12 +87,20 @@ def display_foods(request):
         }
         return render(request, 'inv/unauthenticatedInventory.html', context)
 
-    elif request.user.profile.vendor:
-        items = Foods.objects.all()
+    elif request.user.profile.vendor: #attempt with stackvoerflow comment
+        items = Foods.objects.filter(donator__username=request.user.username)
         context = {
             'items': items,
             'header': 'Foods',
         }
+        if request.GET:
+            form = FoodForm()
+        if request.POST:
+            form = FoodForm(request.POST)
+            if form.is_valid():
+                foods = form.save(commit=False)
+                foods.donator = request.user.username
+                foods.save()
         return render(request, 'inv/vendorInventory.html', context)
 
     elif not request.user.profile.vendor:
@@ -112,12 +125,20 @@ def display_miscObjects(request):
         }
         return render(request, 'inv/unauthenticatedInventory.html', context)
 
-    elif request.user.profile.vendor:
-        items = MiscObjects.objects.all()
+    elif request.user.profile.vendor: #attempt with stackvoerflow comment
+        items = MiscObjects.objects.filter(donator__username=request.user.username)
         context = {
             'items': items,
             'header': 'MiscObjects',
         }
+        if request.GET:
+            form = MiscObjectForm()
+        if request.POST:
+            form = MiscObjectForm(request.POST)
+            if form.is_valid():
+                miscObjects = form.save(commit=False)
+                miscObjects.donator = request.user.username
+                miscObjects.save()
         return render(request, 'inv/vendorInventory.html', context)
 
     elif not request.user.profile.vendor:

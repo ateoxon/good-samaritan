@@ -34,10 +34,11 @@
       <tr>
         <th>id</th>
         <th>Description</th>
-        <th>Expiry Date</th>
+        <th>Expiration Date</th>
         <th>Status</th>
         <th>Misc</th>
-        <th>Reserve</th>
+        <th>Donator</th>
+
 
       </tr>
     </thead>
@@ -52,6 +53,10 @@
         <td>{{ item.expiry }} </td>
         <td>{{ item.status }}</td>
         <td>{{ item.misc }}</td>
+        <td> {{ item.donator }} </td>
+
+
+
 
         {% if header|lower == "drinks" %}
         <td>
@@ -66,6 +71,9 @@
             <a href="{% url 'reserve_miscObject' item.pk %}" class="btn btn-outline-info" role="button" aria-pressed="true" > Reserve</a>
         </td>
         {% endif %}
+
+
+
 
       </tr>
 

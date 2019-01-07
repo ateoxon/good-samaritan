@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 from users.models import *
 
 
@@ -25,7 +26,10 @@ class Donation(models.Model):
         abstract = True
 
     def __str__(self):
-        return '{0}'.format(self.description)
+        return self.description
+
+    def get_absolute_url(self):
+        return reverse('post-detail', kwargs={'pk': self.pk})
 
 
 

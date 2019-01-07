@@ -10,13 +10,13 @@ class DrinkForm(forms.ModelForm):
 class FoodForm(forms.ModelForm):
     class Meta:
         model = Foods
-        fields = ('description', 'expiry', 'status', 'misc')
+        fields = ('description', 'expiry', 'status', 'misc', 'donator')
 
 
 class MiscObjectForm(forms.ModelForm):
     class Meta:
         model = MiscObjects
-        fields = ('description', 'expiry', 'status', 'misc')
+        fields = ('description', 'expiry', 'status', 'misc', 'donator')
 
 class ReserveDrinkForm(forms.ModelForm):
     class Meta:

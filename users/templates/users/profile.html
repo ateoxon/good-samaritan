@@ -3,29 +3,39 @@
 
 {% block content %}
   <div class="content-section">
-        <div class="media">
-          <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
-          <div class="media-body">
-            <h2 class="account-heading">{{ user.username }}</h2>
-            <p class="text-secondary">{{ user.email }}</p>
-          </div>
+
+      <div class="media" id ="profileTop">
+        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+        <div class="media-body">
+          <h2 class="account-heading">{{ user.username }}</h2>
+          <p class="text-secondary">{{ user.email }}</p>
         </div>
+      </div>
 
-        <form method = "POST" enctype="multipart/form-data">
-          {% csrf_token %}
-          <fieldset class = "form group">
-            <legend class = "border-bottom mb-4">Update Profile Info</legend>
+      <br>
 
-          {{ u_form|crispy }}
-          {{ p_form|crispy }}
+      <h6>Name: <i>{{user.first_name}} {{user.last_name}} </i> </h6>
+      <br>
+      <h6>Is Vendor: <i> {{user.profile.vendor}}</i> </h6>
+      <br>
+      <h6>Phone Number: <i>{{user.profile.phone_Number}}</i> </h6>
+      <br>
+      <h6>Address: <i>{{user.profile.address}}, {{user.profile.city}}, {{user.profile.state}} {{user.profile.zip_Code}}</i> </h6>
+      <br>
+      <h6>Hours of Operation: <i>{{user.profile.hours}}</i></h6>
+      <br>
+      <h6>Point of Contact: <i>{{user.profile.contact}}</i></h6>
 
-          </fieldset>
 
-          <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Update</button>
-          </div>
 
-        </form>
+      <br>
+      <br>
+
+      <a href="{% url 'editProfile' %}" class="btn btn-primary btn-lg" role="button" aria-disabled="true">Edit Profile</a>
+
+
+
+
   </div>
 
 {% endblock content %}
