@@ -19,20 +19,6 @@ def consumerView(request):
 def unauthenticatedView(request):
     return render(request, 'inv/unauthenticatedInventory.html')
 
-"""
-class UserDonationListView(ListView):
-    model = Donation
-    template_name = 'inv/user_donations.html'
-    context_object_name = 'items'
-    paginate_by = 5
-
-    def get_queryset(self):
-        user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Donation.objects.filter(donator=user)
-        #.order_by('-date_posted')
-"""
-
-################ need to edit other views to render consumer/vendor/unauth
 
 def display_drinks(request):
     items = Drinks.objects.all()
@@ -40,7 +26,7 @@ def display_drinks(request):
         'items': items,
         'header': 'Drinks',
     }
-    if not request.user.is_authenticated:
+    if not request.user.is_authenticated: #user not logged in
         items = Drinks.objects.filter(status='AVAILABLE')
         context = {
             'items': items,
@@ -48,7 +34,7 @@ def display_drinks(request):
         }
         return render(request, 'inv/unauthenticatedInventory.html', context)
 
-    elif request.user.profile.vendor: #attempt with stackvoerflow comment
+    elif request.user.profile.vendor: #user is vendor
         items = Drinks.objects.filter(donator__username=request.user.username)
         context = {
             'items': items,
@@ -64,7 +50,7 @@ def display_drinks(request):
                 drinks.save()
         return render(request, 'inv/vendorInventory.html', context)
 
-    elif not request.user.profile.vendor:
+    elif not request.user.profile.vendor: #user is consumer
         items = Drinks.objects.filter(status='AVAILABLE')
         context = {
             'items': items,
@@ -87,7 +73,7 @@ def display_foods(request):
         }
         return render(request, 'inv/unauthenticatedInventory.html', context)
 
-    elif request.user.profile.vendor: #attempt with stackvoerflow comment
+    elif request.user.profile.vendor: #
         items = Foods.objects.filter(donator__username=request.user.username)
         context = {
             'items': items,

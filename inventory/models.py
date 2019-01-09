@@ -1,4 +1,8 @@
 from django.db import models
+from datetime import date
+from django.core.exceptions import ValidationError
+from django import forms
+from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from users.models import *
@@ -6,6 +10,12 @@ from users.models import *
 
 
 # Create your models here.
+
+def no_past(value):
+    today = date.today()
+    if value < today:
+        raise ValidationError('Expiration date cannot be in the past.')
+
 
 class Donation(models.Model):
 
@@ -16,11 +26,10 @@ class Donation(models.Model):
         ('RESERVED', 'Item reserved'),
     )
 
-    expiry = models.CharField(max_length=200, blank=False, help_text="Enter expiration date here")
+    expiry = models.DateField(help_text = "Enter expiration date")
     status = models.CharField(max_length=10, choices=choices, default='AVAILABLE')
     misc = models.CharField(max_length=50, blank=False, help_text='Miscellaneous info about your donation')
     donator = models.ForeignKey(User, on_delete=models.CASCADE)
-
 
     class Meta:
         abstract = True
