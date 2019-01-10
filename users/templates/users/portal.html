@@ -39,16 +39,27 @@
         <h3 class="mb-5">
           <em>Where non-profit food pantries and restaurants meet</em>
         </h3>
+        <div class="downArrow">
+            <a href="#about">
+              <span style="color: white;"><h1><i class="fas fa-angle-double-down"></i></h1></span>
+            </a>
+        </div>
       </div>
       <div class="overlay"></div>
+
     </header>
+
+
+
+
+
 
     <!-- input area -->
     <section class="content-section bg-dark text-light" id="about">
 
       <div id="welcomePage">
 
-        <center><h5>An application where local non-profits and restaurants meet.</h5></center>
+        <center><h5 id="intro">An application where local non-profits and restaurants meet.</h5></center>
         <br>
         <center><h5>With Good Samaritan, businesses and food pantries can easily coordinate donation management and pick-up times.</h5></center>
         <br>
@@ -87,5 +98,33 @@
 
     </section>
   </body>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+      // Add smooth scrolling to all links
+      $("a").on('click', function(event) {
+
+        // Make sure this.hash has a value before overriding default behavior
+        if (this.hash !== "") {
+          // Prevent default anchor click behavior
+          event.preventDefault();
+
+          // Store hash
+          var hash = this.hash;
+
+          // Using jQuery's animate() method to add smooth page scroll
+          // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+          $('html, body').animate({
+            scrollTop: $(hash).offset().top
+          }, 800, function(){
+
+            // Add hash (#) to URL when done scrolling (default click behavior)
+            window.location.hash = hash;
+          });
+        } // End if
+      });
+    });
+    </script>
 
 </html>

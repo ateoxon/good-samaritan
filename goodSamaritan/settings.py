@@ -32,7 +32,6 @@ ALLOWED_HOSTS = ['localhost']
 INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
-    'floppyforms',
     #'inventory.apps.InventoryConfig',
     'crispy_forms',
     'django.contrib.admin',
