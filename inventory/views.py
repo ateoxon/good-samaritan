@@ -19,6 +19,22 @@ def consumerView(request):
 def unauthenticatedView(request):
     return render(request, 'inv/unauthenticatedInventory.html')
 
+@login_required
+def display_reserved_drinks(request):
+    items = Drinks.objects.all()
+    context = {
+        'items':items,
+        'header': 'Drinks',
+    }
+    items = Drinks.objects.filter(receiver=request.user.username)
+    context = {
+        'items': items,
+        'header': 'Drinks',
+    }
+    return render(request, 'inv/reservedItems.html', context)
+
+
+
 
 def display_drinks(request):
     items = Drinks.objects.all()

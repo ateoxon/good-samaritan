@@ -30,6 +30,7 @@ class Donation(models.Model):
     status = models.CharField(max_length=10, choices=choices, default='AVAILABLE')
     misc = models.CharField(max_length=50, blank=False, help_text='Miscellaneous info about your donation')
     donator = models.ForeignKey(User, on_delete=models.CASCADE)
+    receiver = models.CharField(max_length=200, blank=True)
 
     class Meta:
         abstract = True

@@ -1,0 +1,65 @@
+{% extends "blog/base.html" %}
+
+{% block body %}
+
+
+
+<center>  <div class="add_buttons">
+
+
+    <div class="btn-group-vertical">
+      <a href="{% url 'display_reserved_foods' %}" class="btn btn-outline-info" role="button"> View Food</a>
+    </div>
+
+    <div class="btn-group-vertical">
+      <a href="{% url 'display_reserved_drinks' %}" class="btn btn-outline-info" role="button">View Drinks</a>
+    </div>
+
+    <div class="btn-group-vertical">
+      <a href="{% url 'display_reserved_miscObjects' %}" class="btn btn-outline-info" role="button">View Misc</a>
+    </div>
+
+
+  </div>
+
+  </center>
+
+  <div>
+
+    <h4>Currently Viewing Reserved {{ header }}</h4>
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>Description</th>
+        <th>Expiration Date</th>
+        <th>Status</th>
+        <th>Misc</th>
+        <th>Donator</th>
+
+
+      </tr>
+    </thead>
+
+    <tbody>
+
+      {% for item in items %}
+
+      <tr>
+        <td>{{ item.pk }}
+        <td>{{ item.description }}</td>
+        <td>{{ item.expiry }} </td>
+        <td>{{ item.status }}</td>
+        <td>{{ item.misc }}</td>
+        <td>{{ item.donator }} </td>
+
+      </tr>
+
+      {% endfor %}
+
+    </tbody>
+  </table>
+
+{% endblock %}
