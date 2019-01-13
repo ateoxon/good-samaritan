@@ -24,7 +24,7 @@ GOOGLE_RECAPTCHA_SECRET_KEY = '6LeuD4YUAAAAAMqzb3hzceFP72y0OoxVLBCF42rL'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost', 'ateoxon.pythonanywhere.com']
 
 
 # Application definition
