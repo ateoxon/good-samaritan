@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-#from django.views.generic import ListView
 from users.models import *
 from .models import *
 from .forms import *
@@ -18,23 +17,6 @@ def consumerView(request):
 
 def unauthenticatedView(request):
     return render(request, 'inv/unauthenticatedInventory.html')
-
-@login_required
-def display_reserved_drinks(request):
-    items = Drinks.objects.all()
-    context = {
-        'items':items,
-        'header': 'Drinks',
-    }
-    items = Drinks.objects.filter(receiver=request.user.username)
-    context = {
-        'items': items,
-        'header': 'Drinks',
-    }
-    return render(request, 'inv/reservedItems.html', context)
-
-
-
 
 def display_drinks(request):
     items = Drinks.objects.all()
