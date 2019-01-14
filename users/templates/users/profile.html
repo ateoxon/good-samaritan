@@ -33,6 +33,11 @@
 
       <a href="{% url 'editProfile' %}" class="btn btn-primary btn-lg" role="button" aria-disabled="true">Edit Profile</a>
 
+      {% if user.is_authenticated %}
+        {% if not user.profile.vendor %}
+          <a href="{% url 'reservedIndex' %}" class="btn btn-primary btn-lg" role="button" aria-disabled="true">View Reserved Items</a>
+        {% endif %}
+      {% endif %}
 
 
 
