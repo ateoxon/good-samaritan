@@ -17,6 +17,8 @@ urlpatterns = [
 
     #reserved items
     url(r'^reservedDrinks$', display_reserved_drinks, name="display_reserved_drinks"),
+    url(r'^reservedFoods$', display_reserved_foods, name="display_reserved_foods"),
+    url(r'^reservedMiscObjects$', display_reserved_miscObjects, name="display_reserved_miscObjects"),
 
     #add items
     url(r'^add_drink$', add_drink, name="add_drink"),

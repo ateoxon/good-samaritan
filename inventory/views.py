@@ -39,6 +39,47 @@ def display_reserved_drinks(request):
             drinks.receiver = request.user.username
             drinks.save()
     return render(request, 'inv/reservedItems.html', context)
+
+@login_required
+def display_reserved_foods(request):
+    items = Foods.objects.filter(receiver__username=request.user.username)
+    context = {
+        'items': items,
+        'header': 'Foods',
+    }
+    if request.GET:
+        form = FoodForm()
+    if request.POST:
+        form = FoodForm(request.POST)
+        if form.is_valid():
+            foods = form.save(commit=False)
+            foods.receiver = request.user.username
+            foods.save()
+    return render(request, 'inv/reservedItems.html', context)
+
+@login_required
+def display_reserved_miscObjects(request):
+    items = MiscObjects.objects.filter(receiver__username=request.user.username)
+    context = {
+        'items': items,
+        'header': 'MiscObjects',
+    }
+    if request.GET:
+        form = MiscObjectForm()
+    if request.POST:
+        form = MiscObjectForm(request.POST)
+        if form.is_valid():
+            miscObjects = form.save(commit=False)
+            miscObjects.receiver = request.user.username
+            miscObjects.save()
+    return render(request, 'inv/reservedItems.html', context)
+
+
+
+
+
+
+
 ##########################################
 def display_drinks(request):
     items = Drinks.objects.all()
@@ -174,6 +215,13 @@ def add_item(request, cls):
             return render(request, 'inv/add_new.html', {'form' : form})
 
 @login_required
+def add_miscObject(request):
+    if not request.user.profile.vendor:
+        return redirect('consumerIndex')
+    else:
+        return add_item(request, MiscObjectForm)
+
+@login_required
 def add_drink(request):
     if not request.user.profile.vendor:
         return redirect('consumerIndex')
@@ -187,12 +235,7 @@ def add_food(request):
     else:
         return add_item(request, FoodForm)
 
-@login_required
-def add_miscObject(request):
-    if not request.user.profile.vendor:
-        return redirect('consumerIndex')
-    else:
-        return add_item(request, MiscObjectForm)
+
 
 ################################################################################
 
