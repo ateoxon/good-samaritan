@@ -34,17 +34,19 @@
               <a class="nav-item nav-link" href="{% url 'blog-home' %}">Blog</a>
 
               {% if user.is_authenticated %}
-
                 {% if user.profile.vendor %} <!-- checks if vendor is true, should change nav bar to separate inventory -->
                 <a class="nav-item nav-link" href="{% url 'vendorIndex' %}">View/Edit Inventory</a> <!-- vendor link -->
                 {% elif not user.profile.vendor %}
                 <a class="nav-item nav-link" href="{% url 'consumerIndex' %}">View Inventory</a> <!-- consumer link -->
                 {% endif %}
-              {% elif not user.is_authenticated %}
-              <a class="nav-item nav-link" href="{% url 'unauthenticatedIndex' %}">View Inventory</a> <!-- unauth link -->
-
+                {% elif not user.is_authenticated %}
+                <a class="nav-item nav-link" href="{% url 'unauthenticatedIndex' %}">View Inventory</a> <!-- unauth link -->
               {% endif %}
 
+              {% if user.is_authenticated %}
+                {% if not user.profile.vendor %}
+                <a class="nav-item nav-link" href="{% url 'reservedIndex' %}">View Reserved Items</a> <!-- consumer link -->
+              {% endif %}
 
             </div>
             <!-- Navbar Right Side -->

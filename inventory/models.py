@@ -26,10 +26,12 @@ class Donation(models.Model):
         ('RESERVED', 'Item reserved'),
     )
 
-    expiry = models.DateField(help_text = "Enter expiration date")
+    expiry = models.DateField(help_text = "Enter expiration date", blank=True,null=True )
     status = models.CharField(max_length=10, choices=choices, default='AVAILABLE')
     misc = models.CharField(max_length=50, blank=False, help_text='Miscellaneous info about your donation')
-    donator = models.ForeignKey(User, on_delete=models.CASCADE)
+    #donator = models.ForeignKey(User, on_delete=models.CASCADE)
+    donator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         abstract = True

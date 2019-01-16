@@ -21,16 +21,19 @@ class MiscObjectForm(forms.ModelForm):
 class ReserveDrinkForm(forms.ModelForm):
     class Meta:
         model = Drinks
-        fields = ('status',)
+        fields = ('status', 'receiver')
+        #fields = ('status',)
 
 
 class ReserveFoodForm(forms.ModelForm):
     class Meta:
         model = Foods
-        fields = ('status',)
+        #fields = ('status',)
+        fields = ('status', 'receiver')
 
 
 class ReserveMiscObjectForm(forms.ModelForm):
     class Meta:
         model = MiscObjects
-        fields = ('status',)
+        #fields = ('status',)
+        fields = ('status', 'receiver')
