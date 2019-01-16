@@ -46,6 +46,7 @@
               {% if user.is_authenticated %}
                 {% if not user.profile.vendor %}
                 <a class="nav-item nav-link" href="{% url 'reservedIndex' %}">View Reserved Items</a> <!-- consumer link -->
+                {% endif %}
               {% endif %}
 
             </div>
