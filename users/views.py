@@ -11,6 +11,9 @@ from django.views.generic import (
 )
 from inventory.models import *
 
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 def landing(request):
     return render(request, 'users/portal.html')

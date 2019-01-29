@@ -23,13 +23,21 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('register/', user_views.register, name = 'register'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name = 'login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name = 'logout'),
+
+    path('sendEmail/', user_views.sendEmail, name = 'sendEmail'),
+    path('sentEmail/', user_views.sentEmail, name = 'sentEmail'),
+
     path('profile/', user_views.profile, name = 'profile'),
     path('profile/editProfile', user_views.editProfile, name = 'editProfile'),
+
     path('blog/', include('blog.urls')), #can edit here, can change blog to blog_dev and can create a develepment screen
+
     path('inventory/', include('inventory.urls')),
+
     path('captcha/', include('captcha.urls')),
     path('', user_views.landing, name='landing')
 ]
